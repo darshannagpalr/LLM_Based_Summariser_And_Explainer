@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Text-to-Speech Web App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>LLM Text-to-Speech App</h1>
+        <textarea id="textInput" placeholder="Enter or paste text here..."></textarea>
+        <div class="controls">
+            <button id="speakBtn">Speak</button>
+            <button id="stopBtn">Stop</button>
+            <button id="clearBtn">Clear</button>
+        </div>
+        <div class="settings">
+            <label for="voiceSelect">Choose Voice:</label>
+            <select id="voiceSelect"></select>
+            <label for="rate">Rate:</label>
+            <input type="range" id="rate" min="0.5" max="2" value="1" step="0.1">
+        </div>
+    </div>
+
+    <script>
+        const speakBtn = document.getElementById('speakBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const rateControl = document.getElementById('rate');
+        let voices = [];
+
+        function populateVoices() {
+            voices = window.speechSynthesis.getVoices();
+            if (voices.length === 0) {
+                setTimeout(populateVoices, 500);
+                return;
+            }
+            voiceSelect.innerHTML = '';
+            voices.forEach((voice, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                voiceSelect.appendChild(option);
+            });
+        }
+
+        populateVoices();
+        window.speechSynthesis.onvoiceschanged = populateVoices;
+
+        speakBtn.onclick = () => {
+            const text = document.getElementById('textInput').value.trim();
+            if (!text) return;
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            const selectedVoice = voices[voiceSelect.value];
+            if (selectedVoice) utterance.voice = selectedVoice;
+            utterance.rate = parseFloat(rateControl.value);
+
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+        };
+
+        stopBtn.onclick = () => {
+            window.speechSynthesis.cancel();
+        };
+
+        clearBtn.onclick = () => {
+            document.getElementById('textInput').value = '';
+        };
+    </script>
+</body>
+</html>

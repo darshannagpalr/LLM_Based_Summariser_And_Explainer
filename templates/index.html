@@ -1,56 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indicative Translator</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom styles for Inter font and general body styling */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
+            background-color: #f0f4f8;
+            /* Light blue-gray background */
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align to start for better top spacing */
+            align-items: flex-start;
+            /* Align to start for better top spacing */
             min-height: 100vh;
             padding: 2rem;
             box-sizing: border-box;
         }
+
         .container {
+            font-weight: 400;
             background-color: #ffffff;
             padding: 2.5rem;
-            border-radius: 1.5rem; /* More rounded corners */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            border-radius: 1.5rem;
+            /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            /* Softer shadow */
             width: 100%;
-            max-width: 800px; /* Max width for larger screens */
+            max-width: 800px;
+            /* Max width for larger screens */
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
+
         /* Style for form elements */
         .form-group label {
             font-weight: 600;
-            color: #334155; /* Darker gray for labels */
+            color: #334155;
+            /* Darker gray for labels */
             margin-bottom: 0.5rem;
             display: block;
         }
+
         .form-group textarea,
         .form-group input[type="file"] {
-            border: 1px solid #cbd5e1; /* Light gray border */
-            border-radius: 0.75rem; /* Rounded input fields */
+            border: 1px solid #cbd5e1;
+            /* Light gray border */
+            border-radius: 0.75rem;
+            /* Rounded input fields */
             padding: 0.75rem 1rem;
             width: 100%;
             box-sizing: border-box;
             transition: border-color 0.2s ease-in-out;
         }
+
         .form-group textarea:focus,
         .form-group input[type="file"]:focus {
             outline: none;
-            border-color: #3b82f6; /* Blue focus border */
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Light blue shadow on focus */
+            border-color: #3b82f6;
+            /* Blue focus border */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            /* Light blue shadow on focus */
         }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -62,30 +78,43 @@
             transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         .btn-primary {
-            background-color: #3b82f6; /* Blue */
+            background-color: #3b82f6;
+            /* Blue */
             color: #ffffff;
         }
+
         .btn-primary:hover {
-            background-color: #2563eb; /* Darker blue on hover */
+            background-color: #2563eb;
+            /* Darker blue on hover */
             transform: translateY(-1px);
         }
+
         .btn-secondary {
-            background-color: #64748b; /* Gray */
+            background-color: #64748b;
+            /* Gray */
             color: #ffffff;
         }
+
         .btn-secondary:hover {
-            background-color: #475569; /* Darker gray on hover */
+            background-color: #475569;
+            /* Darker gray on hover */
             transform: translateY(-1px);
         }
+
         .btn-danger {
-            background-color: #ef4444; /* Red */
+            background-color: #ef4444;
+            /* Red */
             color: #ffffff;
         }
+
         .btn-danger:hover {
-            background-color: #dc2626; /* Darker red on hover */
+            background-color: #dc2626;
+            /* Darker red on hover */
             transform: translateY(-1px);
         }
+
         .radio-group label {
             display: flex;
             align-items: center;
@@ -94,20 +123,28 @@
             font-weight: 500;
             color: #475569;
         }
+
         .radio-group input[type="radio"],
         .checkbox-group input[type="checkbox"] {
-            accent-color: #3b82f6; /* Blue accent for radio/checkbox buttons */
+            accent-color: #3b82f6;
+            /* Blue accent for radio/checkbox buttons */
         }
+
         .output-box {
-            background-color: #e2e8f0; /* Lighter gray for output */
+            background-color: #e2e8f0;
+            /* Lighter gray for output */
             padding: 1rem 1.5rem;
             border-radius: 0.75rem;
             min-height: 100px;
-            white-space: pre-wrap; /* Preserve whitespace and line breaks */
-            word-wrap: break-word; /* Break long words */
-            color: #1e293b; /* Dark text */
+            white-space: pre-wrap;
+            /* Preserve whitespace and line breaks */
+            word-wrap: break-word;
+            /* Break long words */
+            color: #1e293b;
+            /* Dark text */
             font-size: 0.95rem;
         }
+
         .loading-spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
             border-left-color: #3b82f6;
@@ -115,45 +152,87 @@
             width: 24px;
             height: 24px;
             animation: spin 1s linear infinite;
-            display: none; /* Hidden by default */
+            display: none;
+            /* Hidden by default */
         }
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
+
         .recording-status {
             margin-top: 0.5rem;
             font-size: 0.875rem;
-            color: #ef4444; /* Red for recording */
+            color: #ef4444;
+            /* Red for recording */
             font-weight: 500;
             display: none;
         }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
                 padding: 1.5rem;
                 border-radius: 1rem;
             }
+
             .btn {
                 padding: 0.6rem 1.2rem;
                 font-size: 0.9rem;
             }
         }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .settings {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            /* Light gray background */
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        #speakOutputBtn {
+            border-radius: 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #28a745;
+        }
+
+        #stopOutputBtn {
+            border-radius: 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #dc3545;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-6">Indicative Translator</h1>
 
         <form id="translatorForm" class="space-y-6">
-            <!-- Text Input -->
             <div class="form-group">
                 <label for="text_input" class="mb-2">Enter Text:</label>
-                <textarea id="text_input" name="text_input" rows="4" placeholder="Type your text here..." class="resize-y"></textarea>
+                <textarea id="text_input" name="text_input" rows="4" placeholder="Type your text here..."
+                    class="resize-y"></textarea>
                 <input type="hidden" name="is_voice_input" id="is_voice_input" value="false">
             </div>
 
-            <!-- Voice Input (Actual) -->
             <div class="form-group">
                 <label class="mb-2">Or Use Voice Input:</label>
                 <button type="button" id="voiceInputBtn" class="btn btn-secondary w-full">
@@ -167,50 +246,47 @@
                 </p>
             </div>
 
-            <!-- Voice Input Language Selection -->
             <div class="form-group">
                 <label for="voice_lang_select" class="mb-2">Select Voice Input Language:</label>
-                <select id="voice_lang_select" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+                <select id="voice_lang_select"
+                    class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
                     <option value="en-US">English (US)</option>
                     <option value="kn-IN">Kannada (India)</option>
                     <option value="hi-IN">Hindi (India)</option>
                 </select>
             </div>
 
-            <!-- Image Input -->
             <div class="form-group">
                 <label for="image_input" class="mb-2">Or Upload Image (for OCR):</label>
                 <input type="file" id="image_input" name="image_input" accept="image/*" class="block w-full text-sm text-gray-500
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
-                    file:text-sm file:font-semibold
-                    file:bg-blue-50 file:text-blue-700
-                    hover:file:bg-blue-100 cursor-pointer">
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-50 file:text-blue-700
+                        hover:file:bg-blue-100 cursor-pointer">
                 <p class="text-sm text-gray-500 mt-2">
                     (Requires Tesseract-OCR and language packs on your backend server.)
                 </p>
             </div>
 
-            <!-- OCR Language Selection -->
             <div class="form-group" id="ocrLanguageSelection">
                 <label class="mb-2">Select OCR Languages (for Image Input):</label>
                 <div class="flex flex-wrap gap-4 checkbox-group">
                     <label>
-                        <input type="checkbox" name="ocr_languages" value="eng" checked class="form-checkbox">
+                        <input type="radio" name="ocr_languages" value="eng" checked class="form-checkbox">
                         English
                     </label>
                     <label>
-                        <input type="checkbox" name="ocr_languages" value="kan" class="form-checkbox">
+                        <input type="radio" name="ocr_languages" value="kan" class="form-checkbox">
                         Kannada
                     </label>
                     <label>
-                        <input type="checkbox" name="ocr_languages" value="hin" class="form-checkbox">
+                        <input type="radio" name="ocr_languages" value="hin" class="form-checkbox">
                         Hindi
                     </label>
                 </div>
             </div>
 
-            <!-- Operation Selection -->
             <div class="form-group">
                 <label class="mb-2">Choose Operation:</label>
                 <div class="flex flex-col sm:flex-row gap-4 radio-group">
@@ -225,14 +301,12 @@
                 </div>
             </div>
 
-            <!-- Submit Button -->
             <button type="submit" class="btn btn-primary w-full flex items-center justify-center gap-2">
                 Process Input
                 <div id="loadingSpinner" class="loading-spinner"></div>
             </button>
         </form>
 
-        <!-- Output Display -->
         <div class="mt-8">
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Output:</h2>
             <div id="outputDisplay" class="output-box">
@@ -240,21 +314,83 @@
             </div>
             <p id="errorDisplay" class="text-red-600 mt-2 hidden">An error occurred.</p>
         </div>
+
+        <div class="settings">
+            <label for="voiceSelect">Choose Voice:</label>
+            <select id="voiceSelect"></select>
+            <label for="rate">Rate:</label>
+            <input type="range" id="rate" min="0.5" max="2" value="1" step="0.1">
+        </div>
+
+        <div class="controls">
+            <button id="speakOutputBtn">Speak Output</button>
+            <button id="stopOutputBtn">Stop Output</button>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('translatorForm');
             const textInput = document.getElementById('text_input');
             const isVoiceInput = document.getElementById('is_voice_input');
             const voiceInputBtn = document.getElementById('voiceInputBtn');
             const recordingStatus = document.getElementById('recordingStatus');
-            const voiceLangSelect = document.getElementById('voice_lang_select'); // New element
+            const voiceLangSelect = document.getElementById('voice_lang_select');
             const imageInput = document.getElementById('image_input');
             const ocrLanguageSelection = document.getElementById('ocrLanguageSelection');
             const outputDisplay = document.getElementById('outputDisplay');
             const errorDisplay = document.getElementById('errorDisplay');
             const loadingSpinner = document.getElementById('loadingSpinner');
+
+            // Moved voice output related elements and logic inside DOMContentLoaded
+            const speakOutputBtn = document.getElementById('speakOutputBtn');
+            const stopOutputBtn = document.getElementById('stopOutputBtn');
+            const voiceSelect = document.getElementById('voiceSelect');
+            const rateControl = document.getElementById('rate');
+
+            let voices = [];
+
+            function populateVoices() {
+                voices = window.speechSynthesis.getVoices();
+                if (voices.length === 0) {
+                    setTimeout(populateVoices, 500);
+                    return;
+                }
+                voiceSelect.innerHTML = '';
+                voices.forEach((voice, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    voiceSelect.appendChild(option);
+                });
+            }
+
+            populateVoices();
+            window.speechSynthesis.onvoiceschanged = populateVoices;
+
+            // Function to speak a given text
+            function speakText(textToSpeak) {
+                if (!textToSpeak.trim()) return;
+
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
+                const selectedVoice = voices[voiceSelect.value];
+                if (selectedVoice) utterance.voice = selectedVoice;
+                utterance.rate = parseFloat(rateControl.value);
+
+                window.speechSynthesis.cancel(); // Stop any current speech
+                window.speechSynthesis.speak(utterance);
+            }
+
+            speakOutputBtn.onclick = () => {
+                // Get text from the outputDisplay div
+                const text = outputDisplay.textContent; // Changed from errorDisplay to outputDisplay
+                speakText(text);
+            };
+
+            stopOutputBtn.onclick = () => {
+                window.speechSynthesis.cancel();
+            };
+            // End of voice output related elements and logic
 
             let recognition; // Will hold the SpeechRecognition object
             let isRecording = false;
@@ -274,7 +410,7 @@
                 recognition.interimResults = false; // Only return final results
                 // recognition.lang will be set dynamically before starting recognition
 
-                recognition.onstart = function() {
+                recognition.onstart = function () {
                     isRecording = true;
                     voiceInputBtn.textContent = "Stop Voice Input";
                     voiceInputBtn.classList.remove('btn-secondary');
@@ -283,21 +419,21 @@
                     console.log('Voice recognition started.');
                 };
 
-                recognition.onresult = function(event) {
+                recognition.onresult = function (event) {
                     const transcript = event.results[0][0].transcript;
                     textInput.value = transcript;
                     isVoiceInput.value = 'true'; // Mark this as voice input
                     console.log('Speech recognized:', transcript);
                 };
 
-                recognition.onerror = function(event) {
+                recognition.onerror = function (event) {
                     console.error('Speech recognition error:', event.error);
                     errorDisplay.textContent = `Voice input error: ${event.error}. Please ensure microphone access.`;
                     errorDisplay.classList.remove('hidden');
                     stopRecording(); // Ensure UI resets on error
                 };
 
-                recognition.onend = function() {
+                recognition.onend = function () {
                     console.log('Voice recognition ended.');
                     stopRecording();
                 };
@@ -335,7 +471,7 @@
                     }
                 }
 
-                voiceInputBtn.addEventListener('click', function() {
+                voiceInputBtn.addEventListener('click', function () {
                     if (isRecording) {
                         stopRecording();
                     } else {
@@ -344,7 +480,7 @@
                 });
             }
 
-            form.addEventListener('submit', async function(event) {
+            form.addEventListener('submit', async function (event) {
                 event.preventDefault(); // Prevent default form submission
 
                 stopRecording(); // Stop recording if active when form is submitted
@@ -360,7 +496,7 @@
 
                 // Collect selected OCR languages
                 const selectedOcrLanguages = Array.from(document.querySelectorAll('input[name="ocr_languages"]:checked'))
-                                                  .map(checkbox => checkbox.value);
+                    .map(checkbox => checkbox.value);
                 selectedOcrLanguages.forEach(lang => {
                     formData.append('ocr_languages', lang);
                 });
@@ -403,14 +539,14 @@
             });
 
             // Clear other inputs when one is used
-            textInput.addEventListener('input', function() {
+            textInput.addEventListener('input', function () {
                 // If text is manually typed, it's not voice input
                 isVoiceInput.value = 'false';
                 imageInput.value = '';
                 stopRecording(); // Stop recording if user starts typing
             });
 
-            imageInput.addEventListener('change', function() {
+            imageInput.addEventListener('change', function () {
                 textInput.value = '';
                 isVoiceInput.value = 'false';
                 stopRecording(); // Stop recording if user uploads an image
@@ -418,4 +554,5 @@
         });
     </script>
 </body>
+
 </html>
